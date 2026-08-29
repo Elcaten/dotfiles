@@ -9,14 +9,10 @@
   {
     "context": "Workspace",
     "bindings": {
-      "shift shift": "file_finder::Toggle"
+      "shift shift": "file_finder::Toggle",
+      "cmd cmd": "command_palette::Toggle",
+      "cmd-alt-d": ["task::Spawn", { "task_tag": "ampere-dev" }],
     },
-  },
-  {
-      "context": "Workspace",
-      "bindings": {
-        "cmd cmd": "command_palette::Toggle"
-      },
   },
   {
     "context": "Editor && vim_mode == insert",
@@ -27,7 +23,7 @@
   {
     "context": "Editor",
     "unbind": {
-      "cmd-;": "editor::ToggleLineNumbers"
-    }
-  }
+      "cmd-;": "editor::ToggleLineNumbers",
+    },
+  },
 ]
