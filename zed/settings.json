@@ -7,6 +7,8 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "vim_mode": false,
+  "helix_mode": true,
   "ssh_connections": [
     {
       "host": "hetzner",
@@ -102,7 +104,6 @@
     "provider": "zed",
     "allow_data_collection": "no",
   },
-  "helix_mode": true,
   "ui_font_family": "JetBrains Mono",
   "redact_private_values": true,
   "telemetry": {
@@ -116,7 +117,7 @@
   "session": {
     "trust_all_worktrees": true,
   },
-  "base_keymap": "VSCode",
+  "base_keymap": "Zed",
   "agent_servers": {
     "codex-acp": {
       "type": "registry",
