@@ -4,4 +4,4 @@
 !/fish/**/*
 /fish/completions
 /fish/fish_variables
-/fish/conf.d/99-fish-local.fish
+/fish/conf.d/99-*.fish
