@@ -91,11 +91,6 @@
     "entry_spacing": "standard",
     "default_width": 300.0,
   },
-  "terminal": {
-    "font_size": 12.0,
-    "font_family": "0xProto Nerd Font Mono",
-    "line_height": "comfortable",
-  },
   "vim": {
     "toggle_relative_line_numbers": true,
   },
@@ -104,7 +99,6 @@
     "provider": "zed",
     "allow_data_collection": "no",
   },
-  "ui_font_family": "JetBrains Mono",
   "redact_private_values": true,
   "telemetry": {
     "diagnostics": false,
@@ -113,7 +107,6 @@
   "minimap": {
     "show": "never",
   },
-  "buffer_font_family": "Fira Code",
   "session": {
     "trust_all_worktrees": true,
   },
@@ -122,7 +115,7 @@
     "codex-acp": {
       "default_config_options": {
         "reasoning_effort": "high",
-        "collaboration_mode": "default"
+        "collaboration_mode": "default",
       },
       "type": "registry",
     },
@@ -132,8 +125,6 @@
     "light": "Zed (Default)",
     "dark": "Zed (Default)",
   },
-  "ui_font_size": 15.0,
-  "buffer_font_size": 13.0,
   "theme": {
     "mode": "system",
     "light": "Alabaster",
