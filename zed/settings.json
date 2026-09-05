@@ -7,6 +7,9 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "terminal": {
+    "font_size": 13.0
+  },
   "vim_mode": false,
   "helix_mode": true,
   "ssh_connections": [
@@ -62,6 +65,7 @@
     "dock": "right",
   },
   "agent": {
+    "default_profile": "write",
     "dock": "left",
     "favorite_models": [],
     "model_parameters": [],
