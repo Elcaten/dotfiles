@@ -5,12 +5,7 @@ if type -q fzf
 end
 
 if type -q zoxide
-    # zoxide 0.9.8 expects cd.fish on disk, but Fish 4.8 can embed it.
-    # Preserve Fish's cd implementation under the helper name zoxide uses.
-    if not functions -q __zoxide_cd_internal
-        functions --copy cd __zoxide_cd_internal
-    end
-    zoxide init fish --cmd cd | source
+    zoxide init fish | source
 end
 
 # eza
