@@ -1,5 +1,5 @@
 *
-!/hammerspoon
+!/tmux/
 !/fish/
 !/fish/**/*
 /fish/completions
