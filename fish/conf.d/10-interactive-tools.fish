@@ -8,6 +8,8 @@ if type -q zoxide
     zoxide init fish | source
 end
 
+abbr -a g 'git'
+
 # eza
 abbr -a ls    'eza --icons=auto'                      # List entries with icons
 abbr -a l     'eza -1 --icons=auto'                   # List one entry per line
