@@ -5,3 +5,6 @@
 /fish/completions
 /fish/fish_variables
 /fish/conf.d/99-*.fish
+!fresh_install.sh
+!brew.sh
+fish/functions/fish_user_key_bindings.fish
