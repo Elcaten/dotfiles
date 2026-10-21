@@ -1,0 +1,91 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "shift shift": "file_finder::Toggle",
+      // "cmd cmd": "command_palette::Toggle",
+    },
+  },
+  {
+    "context": "Editor && !menu",
+    "bindings": {
+      "ctrl-f": "buffer_search::Deploy", // vim default: page down
+      "ctrl-c": "editor::Copy", // vim default: return to normal mode
+      // "ctrl-x": "editor::Cut", // vim default: decrement
+      // "ctrl-v": "editor::Paste", // vim default: visual block mode
+      // "ctrl-a": "editor::SelectAll", // vim default: increment
+      // "ctrl-y": "editor::Undo", // vim default: line up
+      "ctrl-t": "project_symbols::Toggle", // vim default: go to older tag
+      "ctrl-o": "workspace::Open", // vim default: go back
+      // "ctrl-s": "workspace::Save", // vim default: show signature
+      "ctrl-b": "workspace::ToggleLeftDock", // vim default: down
+    },
+  },
+  {
+    "context": "Editor && multibuffer",
+    "bindings": {
+      "n": "editor::MoveToStartOfNextExcerpt",
+      "N": "editor::MoveToStartOfExcerpt",
+    },
+  },
+  {
+    "context": "Editor && (vim_mode == helix_normal || vim_mode == helix_select)",
+    "bindings": {
+      "space shift-c": "editor::ToggleBlockComments",
+    },
+  },
+  {
+    "context": "Pane",
+    "bindings": {
+      "ctrl-=": "pane::GoForward",
+    },
+  },
+  {
+    "context": "Pane",
+    "unbind": {
+      "ctrl-_": "pane::GoForward",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "alt-cmd-y": "workspace::ToggleAllDocks",
+    },
+  },
+  {
+    "context": "AcpThread",
+    "unbind": {
+      "cmd-shift-g": "agent::SelectPreviousThreadMatch",
+    },
+  },
+  {
+    "context": "Pane",
+    "unbind": {
+      "cmd-shift-g": "search::SelectPreviousMatch",
+    },
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-shift-g": "git_panel::ToggleFocus",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-shift-g": "git_panel::ToggleFocus",
+    },
+  },
+  {
+    "bindings": {
+      "g f": "git::ViewFile",
+    },
+  },
+]

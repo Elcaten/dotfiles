@@ -30,8 +30,9 @@ If an existing file conflicts, compare it with the repository copy, back it up
 outside `~/.config`, and move it out of the way before applying. Do not use
 `--adopt` to resolve conflicts blindly: it changes repository files.
 
-Always use `--no-folding` to keep application directories real and symlink
-individual files. This keeps generated files out of this repository.
+Use `--no-folding` for OpenCode, agents, Kitty, and tmux to keep application
+directories real and symlink individual files. Zed uses a deliberate exception
+for its themes directory; follow the Zed commands below.
 
 Both `opencode.jsonc` (server/model configuration) and `cli.json` (terminal
 preferences, including `/settings`) are managed. Future skills belong in
@@ -93,6 +94,34 @@ Reload an existing tmux session with:
 tmux source-file ~/.config/tmux/tmux.conf
 ```
 
+## Zed
+
+The `zed` package manages `settings.json`, `keymap.json`, and the entire `themes/`
+directory under `~/.config/zed/`. Settings and keymap are individual symlinks;
+`themes/` is a directory symlink, so adding or removing themes from either
+location changes the repository directly. Commit/push/pull syncs these changes
+without needing to rerun Stow for each new theme. The prompt database,
+credentials, and other application state stay local.
+
+```sh
+mkdir -p "$HOME/.config/zed"
+stow --simulate --verbose --target="$HOME" zed
+stow --verbose --target="$HOME" zed
+```
+
+Creating the real Zed directory first prevents Stow from linking the entire
+application directory. Do not use `--no-folding` for Zed: it would unfold the
+themes link into individual files. If `themes/` already exists as a real
+directory, preserve any themes you want to share in the repository, then back up
+and move the existing directory aside so Stow can create the directory symlink.
+
+Back up and move conflicting existing files aside before applying. Settings are
+preserved as-is, including SSH host aliases, remote project paths, font choices,
+and the custom `~/.local/bin/cursor-agent` command. Set up these dependencies and
+authenticate separately on each machine. Review personal host/project details
+before publishing this repository. Zed is optional on a headless VPS: omit `zed`
+from the commands below if you do not use it there.
+
 ## Sync
 
 Edit the installed configuration normally: the symlinks point into this repo.
@@ -101,6 +130,8 @@ Review changes, then commit and push explicitly. On another machine:
 ```sh
 git pull --ff-only
 stow --no-folding --verbose --target="$HOME" opencode agents kitty tmux
+mkdir -p "$HOME/.config/zed"
+stow --verbose --target="$HOME" zed
 ```
 
 Pulling updates existing linked files; rerunning Stow creates links for new ones.
@@ -110,7 +141,7 @@ to avoid dangling links, then pull and stow again.
 ## Unlink
 
 ```sh
-stow --no-folding --delete --target="$HOME" opencode agents kitty tmux
+stow --no-folding --delete --target="$HOME" opencode agents kitty tmux zed
 ```
 
 This removes managed symlinks, not repository files or unrelated configuration.

@@ -1,0 +1,296 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "proxy": "",
+  "theme_overrides": {
+    "Alabaster": {
+      "editor.diff_hunk.added.background": "#00a00044",
+      "editor.diff_hunk.added.hollow_background": "#00a00033",
+      "editor.diff_hunk.added.hollow_border": "#00dd00aa",
+      "editor.diff_hunk.deleted.background": "#d0304044",
+      "editor.diff_hunk.deleted.hollow_background": "#d0304033",
+      "editor.diff_hunk.deleted.hollow_border": "#ff5060aa",
+    },
+  },
+  "lsp": {
+    "vtsls": {
+      "settings": {
+        "typescript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always",
+          },
+        },
+        "javascript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always",
+          },
+        },
+      },
+      "enable_lsp_tasks": true,
+    },
+  },
+  "show_edit_predictions": false,
+  "buffer_line_height": "comfortable",
+  "agent_buffer_font_size": 14.0,
+  "buffer_font_size": 14.0,
+  "buffer_font_family": "Fira Code",
+  "agent_ui_font_size": 16.0,
+  "ui_font_size": 16.0,
+  "ui_font_family": "Inter",
+  "inline_code_actions": true,
+  "double_click_in_multibuffer": "open",
+  "which_key": {
+    "delay_ms": 450,
+    "enabled": true,
+  },
+  "zoomed_padding": true,
+  "search": {
+    "button": false,
+  },
+  "status_bar": {
+    "show_active_file": true,
+    "line_endings_button": false,
+    "active_language_button": true,
+  },
+  "soft_wrap": "editor_width",
+  "tab_size": 2,
+  "terminal": {
+    "flexible": true,
+    "font_family": ".ZedMono",
+    "copy_on_select": true,
+    "font_size": 14.0,
+  },
+  "vim_mode": false,
+  "helix_mode": true,
+  "ssh_connections": [
+    {
+      "host": "hetzner",
+      "args": [],
+      "projects": [
+        {
+          "paths": ["/root"],
+        },
+        {
+          "paths": ["/root/./"],
+        },
+      ],
+    },
+    {
+      "host": "homelab",
+      "args": [],
+      "projects": [
+        {
+          "paths": ["/home/admin"],
+        },
+        {
+          "paths": ["/home/admin/src/FreshRSS"],
+        },
+        {
+          "paths": ["/home/admin/src/world-of-warships"],
+        },
+      ],
+    },
+    {
+      "host": "preview-bot.devpod",
+      "args": [],
+      "projects": [
+        {
+          "paths": ["/home/node"],
+        },
+      ],
+    },
+    {
+      "host": "Whatbox",
+      "args": [],
+      "projects": [
+        {
+          "paths": ["/home/topbook/./"],
+        },
+      ],
+    },
+  ],
+  "code_lens": "off",
+  "toolbar": {
+    "selections_menu": true,
+    "quick_actions": true,
+    "breadcrumbs": true,
+    "code_actions": true,
+  },
+  // "lsp": {
+  //   "vtsls": {
+  //     "settings": {
+  //       "typescript": {
+  //         "updateImportsOnFileMove": {
+  //           "enabled": "always",
+  //         },
+  //       },
+  //       "javascript": {
+  //         "updateImportsOnFileMove": {
+  //           "enabled": "always",
+  //         },
+  //       },
+  //     },
+  //     "enable_lsp_tasks": true,
+  //   },
+  // },
+  "format_on_save": "on",
+  "languages": {
+    "TypeScript": {
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.fixAll.eslint": true,
+      },
+    },
+    "TSX": {
+      "code_actions_on_format": {
+        "source.organizeImports": true,
+        "source.fixAll.eslint": true,
+      },
+    },
+  },
+  "outline_panel": {
+    "file_icons": false,
+    "button": true,
+    "dock": "right",
+  },
+  "agent": {
+    "default_model": {
+      "provider": "openai-subscribed",
+      "model": "gpt-6-astra",
+      "enable_thinking": true,
+      "effort": "high",
+    },
+    "tool_permissions": {
+      "tools": {
+        "fetch": {
+          "always_allow": [
+            {
+              "pattern": "^https?://github\\.com",
+            },
+            {
+              "pattern": "^https?://raw\\.githubusercontent\\.com",
+            },
+            {
+              "pattern": "^https?://api\\.github\\.com",
+            },
+            {
+              "pattern": "^https?://chromewebstore\\.google\\.com",
+            },
+            {
+              "pattern": "^https?://vortex\\.worldofwarships\\.eu",
+            },
+          ],
+        },
+      },
+    },
+    "button": true,
+    "default_profile": "write",
+    "dock": "left",
+    "favorite_models": [],
+    "model_parameters": [],
+  },
+  "git_panel": {
+    "folder_indicator": "icon",
+    "button": true,
+    "show_count_badge": false,
+    "entry_primary_click_action": "file_diff",
+    "diff_stats": true,
+    "file_icons": false,
+    "collapse_untracked_diff": false,
+    "sort_by": "path",
+    "status_style": "icon",
+    "group_by": "staging",
+    "tree_view": true,
+    "dock": "right",
+  },
+  "collaboration_panel": {
+    "dock": "right",
+    "button": false,
+  },
+  "project_panel": {
+    "button": true,
+    "indent_size": 20.0,
+    "file_icons": false,
+    "hide_hidden": false,
+    "indent_guides": {
+      "show": "always",
+    },
+    "show_diagnostics": "all",
+    "bold_folder_labels": false,
+    "folder_indicator": "icon",
+    "diagnostic_badges": true,
+    "git_status_indicator": true,
+    "git_status": true,
+    "dock": "right",
+    "hide_root": true,
+    "entry_spacing": "standard",
+    "default_width": 300.0,
+  },
+  "vim": {
+    "toggle_relative_line_numbers": true,
+  },
+  "edit_predictions": {
+    "ollama": {},
+    "open_ai_compatible_api": {},
+    "provider": "codestral",
+    "mode": "eager",
+  },
+  "redact_private_values": false,
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
+  "minimap": {
+    "show": "never",
+  },
+  "session": {
+    "trust_all_worktrees": true,
+  },
+  "base_keymap": "Zed",
+  "agent_servers": {
+    "codex-acp": {
+      "default_config_options": {
+        "collaboration_mode": "default",
+        "reasoning_effort": "high",
+        "model": "gpt-6.1-sol",
+        "mode": "agent-full-access",
+      },
+      "type": "registry",
+    },
+    "Cursor ssh-compat": {
+      "default_config_options": {
+        "model": "grok-4.7[context=256k,reasoning_effort=high,fast=true]",
+        "mode": "ask",
+      },
+      "type": "custom",
+      "command": "~/.local/bin/cursor-agent",
+      "args": ["acp"],
+    },
+    "cursor": {
+      "default_config_options": {
+        "reasoning_effort": "high",
+        "model": "grok-4.7",
+        "effort": "high",
+        "fast": "false",
+        "mode": "agent",
+      },
+      "type": "registry",
+    },
+  },
+  "icon_theme": {
+    "mode": "system",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)",
+  },
+  "theme": {
+    "mode": "system",
+    "light": "Alabaster",
+    "dark": "Gruvbox Dark",
+  },
+}
