@@ -72,6 +72,27 @@ is preserved as-is, including the JetBrains Mono font choice and macOS keybindin
 install the font separately on another desktop. Kitty is optional on a headless
 VPS: omit `kitty` from the commands below if you do not use it there.
 
+## tmux
+
+The `tmux` package manages `~/.config/tmux/tmux.conf`.
+
+```sh
+stow --no-folding --simulate --verbose --target="$HOME" tmux
+stow --no-folding --verbose --target="$HOME" tmux
+```
+
+Back up and move any conflicting existing config aside before applying. The
+configuration is preserved as-is and uses `tpack` to initialize plugins, including
+`tmux-resurrect`. Install tmux and tpack separately on each machine; plugin
+downloads and saved sessions are not managed here. A legacy `~/.tmux.conf` can
+take precedence over this config, so check for it on a new machine.
+
+Reload an existing tmux session with:
+
+```sh
+tmux source-file ~/.config/tmux/tmux.conf
+```
+
 ## Sync
 
 Edit the installed configuration normally: the symlinks point into this repo.
@@ -79,7 +100,7 @@ Review changes, then commit and push explicitly. On another machine:
 
 ```sh
 git pull --ff-only
-stow --no-folding --verbose --target="$HOME" opencode agents kitty
+stow --no-folding --verbose --target="$HOME" opencode agents kitty tmux
 ```
 
 Pulling updates existing linked files; rerunning Stow creates links for new ones.
@@ -89,7 +110,7 @@ to avoid dangling links, then pull and stow again.
 ## Unlink
 
 ```sh
-stow --no-folding --delete --target="$HOME" opencode agents kitty
+stow --no-folding --delete --target="$HOME" opencode agents kitty tmux
 ```
 
 This removes managed symlinks, not repository files or unrelated configuration.
