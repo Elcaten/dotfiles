@@ -30,7 +30,7 @@ If an existing file conflicts, compare it with the repository copy, back it up
 outside `~/.config`, and move it out of the way before applying. Do not use
 `--adopt` to resolve conflicts blindly: it changes repository files.
 
-Use `--no-folding` for OpenCode, agents, Kitty, and tmux to keep application
+Use `--no-folding` for OpenCode, agents, Kitty, tmux, and Git to keep application
 directories real and symlink individual files. Zed uses a deliberate exception
 for its themes directory; follow the Zed commands below.
 
@@ -122,6 +122,28 @@ authenticate separately on each machine. Review personal host/project details
 before publishing this repository. Zed is optional on a headless VPS: omit `zed`
 from the commands below if you do not use it there.
 
+## Git
+
+The `git` package manages `~/.config/.gitconfig`. The existing `~/.gitconfig`
+includes this file and remains local.
+
+```sh
+stow --no-folding --simulate --verbose --target="$HOME" git
+stow --no-folding --verbose --target="$HOME" git
+```
+
+Back up and move any conflicting existing file aside before applying. On a new
+machine, check `git config --global --get-all include.path`. If the include is
+not already present, add it without replacing other global settings:
+
+```sh
+git config --global --add include.path '~/.config/.gitconfig'
+```
+
+The shared configuration is preserved as-is, including identity, aliases, and
+the `delta` pager. Install delta separately. Keep credentials out of this file;
+machine-specific overrides can go in `~/.gitconfig` after the include.
+
 ## Sync
 
 Edit the installed configuration normally: the symlinks point into this repo.
@@ -129,7 +151,7 @@ Review changes, then commit and push explicitly. On another machine:
 
 ```sh
 git pull --ff-only
-stow --no-folding --verbose --target="$HOME" opencode agents kitty tmux
+stow --no-folding --verbose --target="$HOME" opencode agents kitty tmux git
 mkdir -p "$HOME/.config/zed"
 stow --verbose --target="$HOME" zed
 ```
@@ -141,7 +163,7 @@ to avoid dangling links, then pull and stow again.
 ## Unlink
 
 ```sh
-stow --no-folding --delete --target="$HOME" opencode agents kitty tmux zed
+stow --no-folding --delete --target="$HOME" opencode agents kitty tmux zed git
 ```
 
 This removes managed symlinks, not repository files or unrelated configuration.
