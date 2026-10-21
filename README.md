@@ -56,6 +56,22 @@ OpenCode. New skills installed directly into `~/.agents/skills` are not
 automatically tracked: move them into `agents/.agents/skills/`, then rerun Stow.
 Review the lockfile too; installers may replace symlinks with regular files.
 
+## Kitty
+
+The `kitty` package manages `kitty.conf`, `current-theme.conf`,
+`quick-access-terminal.conf`, and the custom macOS icon `kitty.app.png` under
+`~/.config/kitty/`. Backup files (`*.bak`) stay local.
+
+```sh
+stow --no-folding --simulate --verbose --target="$HOME" kitty
+stow --no-folding --verbose --target="$HOME" kitty
+```
+
+Back up and move conflicting existing files aside before applying. The config
+is preserved as-is, including the JetBrains Mono font choice and macOS keybindings;
+install the font separately on another desktop. Kitty is optional on a headless
+VPS: omit `kitty` from the commands below if you do not use it there.
+
 ## Sync
 
 Edit the installed configuration normally: the symlinks point into this repo.
@@ -63,7 +79,7 @@ Review changes, then commit and push explicitly. On another machine:
 
 ```sh
 git pull --ff-only
-stow --no-folding --verbose --target="$HOME" opencode agents
+stow --no-folding --verbose --target="$HOME" opencode agents kitty
 ```
 
 Pulling updates existing linked files; rerunning Stow creates links for new ones.
@@ -73,7 +89,7 @@ to avoid dangling links, then pull and stow again.
 ## Unlink
 
 ```sh
-stow --no-folding --delete --target="$HOME" opencode agents
+stow --no-folding --delete --target="$HOME" opencode agents kitty
 ```
 
 This removes managed symlinks, not repository files or unrelated configuration.
