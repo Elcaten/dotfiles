@@ -30,9 +30,10 @@ If an existing file conflicts, compare it with the repository copy, back it up
 outside `~/.config`, and move it out of the way before applying. Do not use
 `--adopt` to resolve conflicts blindly: it changes repository files.
 
-Use `--no-folding` for OpenCode, agents, Kitty, tmux, Git, and Fish to keep application
-directories real and symlink individual files. Zed uses a deliberate exception
-for its themes directory; follow the Zed commands below.
+Use `--no-folding` for OpenCode, Kitty, tmux, Git, and Fish to keep application
+directories real and symlink individual files. Shared agent skills use a directory
+symlink for Codex-compatible discovery, and Zed uses a directory symlink for its
+themes; follow their commands below.
 
 Both `opencode.jsonc` (server/model configuration) and `cli.json` (terminal
 preferences, including `/settings`) are managed. Future skills belong in
@@ -45,17 +46,59 @@ Never add secrets to Git. Authenticate separately on each machine.
 ## Shared agent skills
 
 The `agents` package manages `~/.agents/skills/` and `~/.agents/.skill-lock.json`.
-It includes each skill's supporting scripts, references, and agent metadata.
+Keep `~/.agents/` real, link `skills/` as a whole directory, and link the lockfile
+individually. This leaves each `SKILL.md` as a regular file inside its source
+skill directory, using the folder symlink support documented by Codex. Supporting
+scripts, references, and agent metadata travel with the skills.
 
 ```sh
-stow --no-folding --simulate --verbose --target="$HOME" agents
-stow --no-folding --verbose --target="$HOME" agents
+mkdir -p "$HOME/.agents"
+stow --simulate --verbose --target="$HOME" agents
+stow --verbose --target="$HOME" agents
 ```
 
-Back up and move conflicting existing files aside before applying, just as with
-OpenCode. New skills installed directly into `~/.agents/skills` are not
-automatically tracked: move them into `agents/.agents/skills/`, then rerun Stow.
-Review the lockfile too; installers may replace symlinks with regular files.
+Creating `~/.agents/` first prevents Stow from linking the entire application
+directory. Do not use `--no-folding` when installing or syncing `agents`: it
+would unfold `skills/` into individual file links. New skills installed directly
+into `~/.agents/skills/` now appear in this repository automatically; review,
+commit, and push them explicitly. Pulling adds new skills without rerunning Stow.
+Review the lockfile too; installers may replace its symlink with a regular file.
+Never put secrets or machine-local data inside the shared skills directory.
+
+### Migrate an existing per-file installation
+
+From this repository, remove only Stow-managed links, recreate the real parent,
+then preview and apply directory folding:
+
+```sh
+stow --no-folding --delete --verbose --target="$HOME" agents
+find "$HOME/.agents/skills" -depth -type d -empty -delete
+```
+
+Unstowing leaves unmanaged files alone. The `find` command removes only empty
+directories left by the per-file installation, never files or nonempty
+directories. If a real `~/.agents/skills/` directory remains, stop before applying:
+compare and preserve its local skills in the repository, then back up and move
+that directory aside. Likewise, back up and move any conflicting regular
+lockfile aside. Once the skills path is clear:
+
+```sh
+mkdir -p "$HOME/.agents"
+stow --simulate --verbose --target="$HOME" agents
+stow --verbose --target="$HOME" agents
+```
+
+Verify the final layout:
+
+```sh
+test -L "$HOME/.agents/skills"
+test -f "$HOME/.agents/skills/code-review/SKILL.md"
+test ! -L "$HOME/.agents/skills/code-review/SKILL.md"
+```
+
+After changing the link layout, run `opencode reload` to refresh OpenCode's skill
+discovery. Restart Codex or its ACP session if it does not discover the skills
+immediately.
 
 ## Kitty
 
@@ -197,7 +240,9 @@ Review changes, then commit and push explicitly. On another machine:
 
 ```sh
 git pull --ff-only
-stow --no-folding --verbose --target="$HOME" opencode agents kitty tmux git fish
+stow --no-folding --verbose --target="$HOME" opencode kitty tmux git fish
+mkdir -p "$HOME/.agents"
+stow --verbose --target="$HOME" agents
 mkdir -p "$HOME/.config/zed"
 stow --verbose --target="$HOME" zed
 ```
