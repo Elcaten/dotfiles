@@ -41,6 +41,21 @@ adding files.
 Keep credentials, `service.json`, dependency files, caches, and session data local.
 Never add secrets to Git. Authenticate separately on each machine.
 
+## Shared agent skills
+
+The `agents` package manages `~/.agents/skills/` and `~/.agents/.skill-lock.json`.
+It includes each skill's supporting scripts, references, and agent metadata.
+
+```sh
+stow --no-folding --simulate --verbose --target="$HOME" agents
+stow --no-folding --verbose --target="$HOME" agents
+```
+
+Back up and move conflicting existing files aside before applying, just as with
+OpenCode. New skills installed directly into `~/.agents/skills` are not
+automatically tracked: move them into `agents/.agents/skills/`, then rerun Stow.
+Review the lockfile too; installers may replace symlinks with regular files.
+
 ## Sync
 
 Edit the installed configuration normally: the symlinks point into this repo.
@@ -48,7 +63,7 @@ Review changes, then commit and push explicitly. On another machine:
 
 ```sh
 git pull --ff-only
-stow --no-folding --verbose --target="$HOME" opencode
+stow --no-folding --verbose --target="$HOME" opencode agents
 ```
 
 Pulling updates existing linked files; rerunning Stow creates links for new ones.
@@ -58,7 +73,7 @@ to avoid dangling links, then pull and stow again.
 ## Unlink
 
 ```sh
-stow --no-folding --delete --target="$HOME" opencode
+stow --no-folding --delete --target="$HOME" opencode agents
 ```
 
 This removes managed symlinks, not repository files or unrelated configuration.
