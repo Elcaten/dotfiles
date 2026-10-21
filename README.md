@@ -30,7 +30,7 @@ If an existing file conflicts, compare it with the repository copy, back it up
 outside `~/.config`, and move it out of the way before applying. Do not use
 `--adopt` to resolve conflicts blindly: it changes repository files.
 
-Use `--no-folding` for OpenCode, agents, Kitty, tmux, and Git to keep application
+Use `--no-folding` for OpenCode, agents, Kitty, tmux, Git, and Fish to keep application
 directories real and symlink individual files. Zed uses a deliberate exception
 for its themes directory; follow the Zed commands below.
 
@@ -144,6 +144,52 @@ The shared configuration is preserved as-is, including identity, aliases, and
 the `delta` pager. Install delta separately. Keep credentials out of this file;
 machine-specific overrides can go in `~/.gitconfig` after the include.
 
+## Fish
+
+The `fish` package manages `config.fish`, shared `conf.d` snippets, and the seven
+shared functions under `~/.config/fish/`. All directories remain real; Stow links
+individual files so shared and per-machine configuration can coexist.
+
+```sh
+stow --no-folding --simulate --verbose --target="$HOME" fish
+stow --no-folding --verbose --target="$HOME" fish
+```
+
+Back up and move conflicting shared files aside before applying. Keep these local:
+
+- `conf.d/99-*.fish`, including this machine's `99-local.fish`
+- Optional `conf.d/00-local.fish` for early PATH setup
+- `fish_variables` (universal variables), completions, and generated state
+
+Git and Stow both exclude these paths. Local snippets are automatically loaded
+by Fish before `config.fish`; do not source them manually. Each machine keeps
+its own snippet. `docs/fish-local.fish.example` is a starting point, not a managed
+file: copy it to `~/.config/fish/conf.d/99-local.fish` only if that file does not
+already exist, or merge the example into the existing local file.
+
+`10-interactive-tools.fish` initializes fzf and zoxide only in interactive shells
+and when each tool is available. `fzf --fish` installs its own keybindings; do not
+also source a package-specific fzf script or add a duplicate
+`functions/fish_user_key_bindings.fish` just to call `fzf_key_bindings`.
+The duplicate keybinding file is excluded too; back up or remove an old local
+copy on another machine if it contains only that redundant setup. Use a recent
+fzf with `--fish` support (0.48.0 or newer).
+
+Tools must be on PATH before `10-interactive-tools.fish` executes. If a machine
+needs explicit PATH setup, put it in the optional local `00-local.fish`, not in
+the later `99-local.fish`. Neither local snippet is required on a fresh install.
+
+Install optional tools separately: fzf and zoxide for interactive integration;
+eza for the listing abbreviations; llm, npm, yazi, Docker Compose, and yq v4 for
+the corresponding helpers. `unquarantine` is macOS-specific. These helpers are
+preserved as-is and only run when invoked. History, secrets, and downloaded tools
+are not synced.
+
+Edit existing linked files normally. Add new shared files in
+`fish/.config/fish/` and rerun Stow on each machine; files created directly in
+the live directory are not automatically imported. Open a new Fish shell to
+load startup changes; sourcing `config.fish` alone does not reload `conf.d`.
+
 ## Sync
 
 Edit the installed configuration normally: the symlinks point into this repo.
@@ -151,7 +197,7 @@ Review changes, then commit and push explicitly. On another machine:
 
 ```sh
 git pull --ff-only
-stow --no-folding --verbose --target="$HOME" opencode agents kitty tmux git
+stow --no-folding --verbose --target="$HOME" opencode agents kitty tmux git fish
 mkdir -p "$HOME/.config/zed"
 stow --verbose --target="$HOME" zed
 ```
@@ -163,7 +209,7 @@ to avoid dangling links, then pull and stow again.
 ## Unlink
 
 ```sh
-stow --no-folding --delete --target="$HOME" opencode agents kitty tmux zed git
+stow --no-folding --delete --target="$HOME" opencode agents kitty tmux zed git fish
 ```
 
 This removes managed symlinks, not repository files or unrelated configuration.

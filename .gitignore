@@ -1,1 +1,8 @@
 .DS_Store
+
+# Fish state and per-machine configuration must stay local.
+/fish/.config/fish/fish_variables
+/fish/.config/fish/conf.d/99-*.fish
+/fish/.config/fish/conf.d/00-local.fish
+/fish/.config/fish/completions/
+/fish/.config/fish/functions/fish_user_key_bindings.fish

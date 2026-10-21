@@ -1,0 +1,16 @@
+# Optional per-machine configuration. Copy (do not symlink) this file to:
+# ~/.config/fish/conf.d/99-local.fish
+# Never replace an existing local snippet without merging it first.
+# Fish automatically sources this file; do not source it again in config.fish.
+
+# Keep private exports, machine-specific paths, and application integrations here.
+# set -gx EDITOR zed
+
+# Guard optional integrations so a missing installation does not break startup.
+# if test -r "$HOME/.orbstack/shell/init2.fish"
+#     source "$HOME/.orbstack/shell/init2.fish"
+# end
+
+# PATH needed by 10-interactive-tools.fish must be set earlier. Use a separate
+# ~/.config/fish/conf.d/00-local.fish for that, for example on a MacPorts system:
+# fish_add_path --global /opt/local/bin /opt/local/sbin

@@ -1,0 +1,6 @@
+\.DS_Store
+fish_variables
+conf\.d/99-.*\.fish
+conf\.d/00-local\.fish
+completions
+functions/fish_user_key_bindings\.fish
