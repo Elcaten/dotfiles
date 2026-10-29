@@ -7,6 +7,12 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "context_servers": {
+    
+  },
+  "markdown_preview": {
+    "open_markdown_files_in_preview": true
+  },
   "proxy": "",
   "theme_overrides": {
     "Alabaster": {
@@ -256,29 +262,11 @@
   "agent_servers": {
     "codex-acp": {
       "default_config_options": {
-        "collaboration_mode": "plan",
+        "fast-mode": true,
+        "collaboration_mode": "default",
         "reasoning_effort": "high",
         "model": "gpt-6.1-sol",
         "mode": "agent-full-access",
-      },
-      "type": "registry",
-    },
-    "Cursor ssh-compat": {
-      "default_config_options": {
-        "model": "grok-4.7[context=256k,reasoning_effort=high,fast=true]",
-        "mode": "ask",
-      },
-      "type": "custom",
-      "command": "~/.local/bin/cursor-agent",
-      "args": ["acp"],
-    },
-    "cursor": {
-      "default_config_options": {
-        "reasoning_effort": "high",
-        "model": "grok-4.7",
-        "effort": "high",
-        "fast": "false",
-        "mode": "agent",
       },
       "type": "registry",
     },
