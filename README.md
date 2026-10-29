@@ -22,23 +22,68 @@ sudo apt install stow
 From this repository, preview and then apply:
 
 ```sh
-stow --no-folding --simulate --verbose --target="$HOME" opencode
-stow --no-folding --verbose --target="$HOME" opencode
+mkdir -p "$HOME/.config/opencode"
+stow --simulate --verbose --target="$HOME" opencode
+stow --verbose --target="$HOME" opencode
 ```
 
 If an existing file conflicts, compare it with the repository copy, back it up
 outside `~/.config`, and move it out of the way before applying. Do not use
 `--adopt` to resolve conflicts blindly: it changes repository files.
 
-Use `--no-folding` for OpenCode, Kitty, tmux, Git, and Fish to keep application
-directories real and symlink individual files. Shared agent skills use a directory
-symlink for Codex-compatible discovery, and Zed uses a directory symlink for its
-themes; follow their commands below.
+Use `--no-folding` for Kitty, tmux, Git, and Fish to keep application directories
+real and link individual files. OpenCode and shared agent skills use directory
+links for their skills. Zed uses a directory link for its themes. Follow the
+commands for each package.
 
 Both `opencode.jsonc` (server/model configuration) and `cli.json` (terminal
-preferences, including `/settings`) are managed. Future skills belong in
-`opencode/.config/opencode/skills/<skill-id>/SKILL.md`. Run Stow again after
-adding files.
+preferences, including `/settings`) are managed. Create `~/.config/opencode/`
+first to keep that directory real. Do not use `--no-folding` for this package:
+Stow must link `skills/` as a whole directory.
+
+OpenCode-specific skills live in
+`opencode/.config/opencode/skills/<skill-id>/SKILL.md`. The installed
+`~/.config/opencode/skills/` link points to that directory. New skills installed
+there appear in this repository automatically. Review all skill files before
+you commit them. Shared skills stay in the separate `agents` package.
+
+To migrate an existing local `~/.config/opencode/skills/` directory, compare its
+contents with the repository. Copy any skills you want to keep into the
+repository, then back up and move the local directory outside `~/.config`.
+Run the OpenCode Stow commands above and check the link:
+
+```sh
+test -L "$HOME/.config/opencode/skills"
+```
+
+### Add an MCP server
+
+Use `--global` to save an MCP server in the shared OpenCode config:
+
+```sh
+opencode mcp add context7 --global --url https://mcp.context7.com/mcp
+opencode mcp list
+git diff -- opencode/.config/opencode/opencode.jsonc
+```
+
+Without `--global`, the command writes to the project config. That file can be
+outside this repository. OpenCode V2 stores server entries under `mcp.servers`.
+See the [OpenCode MCP guide](https://dev.opencode.ai/v2/docs/mcp-servers/).
+
+### Check the config links
+
+If settings do not appear in Git, check both links:
+
+```sh
+ls -l "$HOME/.config/opencode/opencode.jsonc" "$HOME/.config/opencode/cli.json"
+stow --simulate --verbose --target="$HOME" opencode
+```
+
+Both files must be links to this repository. If either file is a regular file,
+compare it with the repository copy. Copy the settings you want to keep into
+the repository, back up the local file outside `~/.config`, and move it out of
+the way. Then run Stow again. Stow will report a conflict until that file is
+removed. Keep the parent directory real so local data stays outside Git.
 
 Keep credentials, `service.json`, dependency files, caches, and session data local.
 Never add secrets to Git. Authenticate separately on each machine.
@@ -240,7 +285,9 @@ Review changes, then commit and push explicitly. On another machine:
 
 ```sh
 git pull --ff-only
-stow --no-folding --verbose --target="$HOME" opencode kitty tmux git fish
+stow --no-folding --verbose --target="$HOME" kitty tmux git fish
+mkdir -p "$HOME/.config/opencode"
+stow --verbose --target="$HOME" opencode
 mkdir -p "$HOME/.agents"
 stow --verbose --target="$HOME" agents
 mkdir -p "$HOME/.config/zed"
