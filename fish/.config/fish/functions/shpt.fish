@@ -6,7 +6,7 @@ function shpt
 
     set -l request (string join ' ' -- $argv)
     set -l command (llm \
-        -m claude-haiku-4.5 \
+        -m gpt-5.6-terra \
         --no-stream \
         --no-log \
         --system "Translate the user request into exactly one valid Fish-compatible Linux command. Output one line only, with no Markdown, comments, or explanation. Prefer the simplest non-destructive command." \

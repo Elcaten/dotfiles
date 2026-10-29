@@ -7,6 +7,12 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "language_models": {
+    "opencode": {
+      "show_zen_models": false,
+      "show_go_models": false
+    }
+  },
   "context_servers": {
     
   },
@@ -260,6 +266,9 @@
   },
   "base_keymap": "Zed",
   "agent_servers": {
+    "opencode-v2": {
+      "type": "registry"
+    },
     "codex-acp": {
       "default_config_options": {
         "fast-mode": true,
