@@ -248,10 +248,13 @@
     "toggle_relative_line_numbers": true,
   },
   "edit_predictions": {
+    "codestral": {
+      "api_url": ""
+    },
     "ollama": {},
     "open_ai_compatible_api": {},
     "provider": "codestral",
-    "mode": "eager",
+    "mode": "subtle",
   },
   "redact_private_values": false,
   "telemetry": {
@@ -271,7 +274,7 @@
     },
     "codex-acp": {
       "default_config_options": {
-        "fast-mode": true,
+        "fast-mode": false,
         "collaboration_mode": "default",
         "reasoning_effort": "high",
         "model": "gpt-6.1-sol",
