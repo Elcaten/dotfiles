@@ -182,6 +182,23 @@ Reload an existing tmux session with:
 tmux source-file ~/.config/tmux/tmux.conf
 ```
 
+## Rex
+
+The `rex` package manages `~/.config/rex/init.lua`. The parent directory remains
+real so Rex can keep any future machine-local files alongside the managed config.
+Application state under `~/Library/` is not managed.
+
+```sh
+mkdir -p "$HOME/.config/rex"
+stow --no-folding --simulate --verbose --target="$HOME" rex
+stow --no-folding --verbose --target="$HOME" rex
+```
+
+Back up and move a conflicting existing `init.lua` aside before applying. The
+shared action assumes projects live under `~/src` and launches OpenCode from
+`/opt/local/bin/opencode`; adjust those paths on machines where they differ.
+Reload the config from Rex after changing it.
+
 ## Zed
 
 The `zed` package manages `settings.json`, `keymap.json`, and the entire `themes/`
@@ -285,7 +302,7 @@ Review changes, then commit and push explicitly. On another machine:
 
 ```sh
 git pull --ff-only
-stow --no-folding --verbose --target="$HOME" kitty tmux git fish
+stow --no-folding --verbose --target="$HOME" kitty tmux rex git fish
 mkdir -p "$HOME/.config/opencode"
 stow --verbose --target="$HOME" opencode
 mkdir -p "$HOME/.agents"
@@ -301,7 +318,7 @@ to avoid dangling links, then pull and stow again.
 ## Unlink
 
 ```sh
-stow --no-folding --delete --target="$HOME" opencode agents kitty tmux zed git fish
+stow --no-folding --delete --target="$HOME" opencode agents kitty tmux rex zed git fish
 ```
 
 This removes managed symlinks, not repository files or unrelated configuration.
