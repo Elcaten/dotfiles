@@ -79,8 +79,41 @@ rex.action{
       end
     end
 
+    local model = rex.ui.pick{
+      title = "Choose a model",
+      items = {
+        { id = "openai/gpt-6.2-sol", title = "Balanced (Sol)", detail = "Recommended" },
+        { id = "openai/gpt-6.1-terra", title = "Easy (Terra)" },
+        { id = "openai/gpt-6-luna", title = "Easiest (Luna)" },
+        { id = "openai/gpt-6.2-astra", title = "Hard (Astra)" },
+      },
+    }
+    if model == nil then return end
+
     local normalized_directory = directory:gsub("/+$", "")
     local session_label = normalized_directory:match("([^/]+)$") or "/"
+    local opencode = "/opt/local/bin/opencode"
+    local provider_id, model_id = model:match("^([^/]+)/(.+)$")
+
+    -- The full-screen TUI takes a session ID, not a model flag.
+    local payload = assert(rex.json.encode({
+      location = { directory = directory },
+      model = { providerID = provider_id, id = model_id },
+    }))
+    local created, create_err = rex.exec({
+      opencode, "api", "post", "/api/session", "--data", payload,
+    }, { cwd = directory, timeout = 15 })
+    if not created then error(create_err, 0) end
+    if not created.ok then
+      local message = created.stderr ~= "" and created.stderr or created.stdout
+      error(message ~= "" and message or "Could not create the OpenCode session", 0)
+    end
+
+    local response = rex.json.decode(created.stdout)
+    local opencode_session_id = response and response.data and response.data.id
+    if type(opencode_session_id) ~= "string" then
+      error("OpenCode did not return a session ID", 0)
+    end
 
     local session, err = rex.call("session.create", {
       label = session_label,
@@ -90,7 +123,7 @@ rex.action{
             flavor = "com.superlogical.terminal.shell",
             options = {
               cwd = directory,
-              command = { "/opt/local/bin/opencode" },
+              command = { opencode, "--session", opencode_session_id },
               shell = "none",
             },
           },

@@ -47,6 +47,14 @@ OpenCode-specific skills live in
 there appear in this repository automatically. Review all skill files before
 you commit them. Shared skills stay in the separate `agents` package.
 
+The global `chatgpt-usage` plugin lives under
+`opencode/.config/opencode/plugins/`. Its server component keeps one shared
+Codex app-server connection and displays the remaining weekly ChatGPT allowance
+and reset day in every OpenCode TUI footer. Install the Codex CLI separately and
+run `codex login` with the same ChatGPT account. If the executable is not on the
+OpenCode service's `PATH`, set `CODEX_BIN` to its absolute path before starting
+the service. Run `/usage-refresh` in OpenCode to refresh it immediately.
+
 To migrate an existing local `~/.config/opencode/skills/` directory, compare its
 contents with the repository. Copy any skills you want to keep into the
 repository, then back up and move the local directory outside `~/.config`.
