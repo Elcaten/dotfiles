@@ -67,7 +67,7 @@ export default Plugin.define({
 })
 
 function formatState(state: UsageState) {
-  if (state.status === "loading") return "ChatGPT usage …"
+  if (state.status === "loading") return "00% left  ↻XXX"
   if (state.status === "error" && state.limits.length === 0) {
     return "ChatGPT usage unavailable"
   }
