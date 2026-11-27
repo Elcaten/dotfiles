@@ -1,4 +1,7 @@
 {
+  "git_panel": {
+    "group_by": "staging"
+  },
   "which_key": {
     "delay_ms": 350,
     "enabled": true
