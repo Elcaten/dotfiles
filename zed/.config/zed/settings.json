@@ -8,6 +8,10 @@
   },
   "agent_servers": {
     "codex-acp": {
+      "default_config_options": {
+        "model": "gpt-6.2-sol",
+        "reasoning_effort": "medium"
+      },
       "type": "registry",
     },
   },
